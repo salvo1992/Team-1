@@ -100,7 +100,47 @@ const finalScore = 0;
 // Creare variabile per tenere traccia del numero (o posizione) della domanda presentata all'utente.
 const questionNumber = 0;
 
+const questionContainer = document.querySelector("#question-container");
+const questionText = document.querySelector("#question-text");
+const answerBox = document.querySelector("#answer-box");
+const displayCounter = document.querySelector("#counter");
+
 // Quando questionNumber è maggiore delle domande disponibili, a quel punto l'applicazione dovrà mostrare il punteggio.
-if (questionNumber.length > questions) {
+//if (questionNumber.length > questions) {
   // mostra finalScore
+//}
+
+const randomPicker = function () {
+  const randomQuestion = Math.floor(Math.random() * questions.length);
+  return questions[randomQuestion];
+}
+randomPicker();
+
+const currentQuestion = randomPicker(questions);
+console.log(currentQuestion)
+
+questionText.innerText = `${currentQuestion.question}` 
+//answerBox.innerHTML = `${currentQuestion.correct_answer} ${currentQuestion.incorrect_answers}`
+const answersArr = [currentQuestion.correct_answer]
+for (let i = 0; i < currentQuestion.incorrect_answers.length; i++) {
+  //let incorrectAnswer = currentQuestion.incorrect_answers[i];
+  answersArr.push(currentQuestion.incorrect_answers[i]);
+}
+console.log(answersArr);
+
+
+const shuffle = function (answerToRandomize) { 
+  for (let i = answersArr.length - 1; i > 0; i--) { 
+    const j = Math.floor(Math.random() * (i + 1)); 
+    [answersArr[i], answersArr[j]] = [answersArr[j], answersArr[i]]; 
+  } 
+  return answersArr; 
+}; 
+
+shuffle(answersArr);
+
+for (let i = 0; i < answersArr.length; i++){
+  answerBox.innerHTML += `<input type="radio" value="${answersArr[i]}" />
+  <label for="contactChoice1">${answersArr[i]}</label>`
+  console.log(answersArr[i]);
 }
