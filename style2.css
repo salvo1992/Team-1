@@ -1,0 +1,14 @@
+body {
+  background-image: url(./assets/bg.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+#logo {
+    padding-inline: 10%;
+    padding-top: 3%;
+}
+
+#logo-img {
+    width: 180px;
+}
