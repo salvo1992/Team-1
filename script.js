@@ -112,7 +112,10 @@ const displayCounter = document.querySelector("#counter");
 
 const randomPicker = function () {
   const randomQuestion = Math.floor(Math.random() * questions.length);
-  return questions[randomQuestion];
+  const found = questions[randomQuestion]
+  questions.splice(randomQuestion, 1);
+  console.log(questions);
+  return found;
 };
 
 randomPicker();
@@ -151,3 +154,5 @@ for (let i = 0; i < answersArr.length; i++) {
   <label for="contactChoice1">${answersArr[i]}</label>`;
   console.log(answersArr[i]);
 }
+
+
