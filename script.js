@@ -122,22 +122,29 @@ console.log(currentQuestion);
 
 questionText.innerText = `${currentQuestion.question}`;
 //answerBox.innerHTML = `${currentQuestion.correct_answer} ${currentQuestion.incorrect_answers}`
-const answersArr = [currentQuestion.correct_answer];
+let answersArr = [currentQuestion.correct_answer];
 for (let i = 0; i < currentQuestion.incorrect_answers.length; i++) {
   //let incorrectAnswer = currentQuestion.incorrect_answers[i];
   answersArr.push(currentQuestion.incorrect_answers[i]);
 }
 console.log(answersArr);
 
-const shuffle = function (answerToRandomize) {
-  for (let i = answersArr.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [answersArr[i], answersArr[j]] = [answersArr[j], answersArr[i]];
+const shuffle = function () {
+  const randomizedAnswer = [];
+  const randomNumbers = [];
+  while (randomizedAnswer.length < answersArr.length) {
+    const j = Math.floor(Math.random() * answersArr.length);
+    console.log(j);
+    if (!randomNumbers.includes(j)) {
+      randomNumbers.push(j);
+      randomizedAnswer.push(answersArr[j]);
+    }
   }
-  return answersArr;
+  answersArr = randomizedAnswer;
 };
 
-shuffle(answersArr);
+shuffle();
+console.log(answersArr);
 
 for (let i = 0; i < answersArr.length; i++) {
   answerBox.innerHTML += `<input type="radio" name="contactChoice" value="${answersArr[i]}" />
