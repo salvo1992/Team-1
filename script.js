@@ -95,10 +95,10 @@ const questions = [
 ];
 
 // Creare una varibile che contenga il punteggio finale del test.
-const finalScore = 0;
+let finalScore = 0;
 
 // Creare variabile per tenere traccia del numero (o posizione) della domanda presentata all'utente.
-const questionNumber = 0;
+let questionNumber = 0;
 
 const questionContainer = document.querySelector("#question-container");
 const questionText = document.querySelector("#question-text");
