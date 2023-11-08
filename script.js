@@ -114,6 +114,7 @@ const randomPicker = function () {
   const randomQuestion = Math.floor(Math.random() * questions.length);
   return questions[randomQuestion];
 };
+
 randomPicker();
 
 const currentQuestion = randomPicker(questions);
