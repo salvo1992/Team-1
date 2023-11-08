@@ -38,6 +38,10 @@ h1 span {
   display: inline;
 }
 
+input {
+  cursor: pointer;
+}
+
 .instructions {
 }
 
