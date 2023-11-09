@@ -168,9 +168,9 @@ const randomPicker = function () {
   const randomIndex = Math.floor(Math.random() * unusedQuestions.length);
   const selectedQuestion = unusedQuestions[randomIndex];
   selectedQuestion.used = true;
-  counterQuestion.innerHTML = `${
+  counterQuestion.innerHTML = `QUESTION ${
     questions.length - (unusedQuestions.length - 1)
-  } / ${questions.length}`;
+  } <span> / ${questions.length} </span>`;
   return selectedQuestion;
 };
 
