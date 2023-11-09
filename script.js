@@ -98,7 +98,8 @@ console.log(questions);
 let finalScore = 0;
 let questionNumber = 0;
 let currentQuestion = null;
-
+let sec;
+let timer;
 const questionContainer = document.querySelector("#question-container");
 const questionText = document.querySelector("#question-text");
 const answerBox = document.querySelector("#answer-box");
@@ -119,41 +120,46 @@ const initializeQuiz = function () {
   nextQuestion();
 };
 
-//let counter = 0;
-//let timeout;
-//const timer = function()
-//{
-//timerContainer = counter
-//timeout = setTimeout(timer, 1000);
-//counter ++
-//if (counter === 10) {
-//counter = 0;
-//nextQuestion();
-//} else if (unusedQuestions.length === 0) {
-//return;
-//}
-//console.log(counter);
-//}
-
-//timerContainer.innerHTML = `<progress id="file" value="60" max="100"> </progress>`
+const timerDuration = 10000;
 
 const nextQuestion = function () {
+  clearInterval(timer); //Resetta Timer
   if (questionNumber < questions.length) {
     currentQuestion = randomPicker();
-
+    questionNumber++;
     questionText.innerText = `${currentQuestion.question}`;
     displayAnswers(currentQuestion);
-    //timer()
-  } else {
+
+    
+    sec = Math.floor(timerDuration/1000);
+    timerContainer.innerHTML = `Time Left: ${sec} seconds`;
+
+    timer = setInterval(function(){
+      if (sec <= 0){
+        clearInterval(timer)
+        handleTimeout();
+      }else {
+        sec--;
+        timerContainer.innerHTML = `Time Left: ${sec} seconds`;
+      }
+    }, 1000)
+    
+  //console.log(timer)
+  }else {
     // Mostra il punteggio finale quando tutte le domande sono state fatte
     const resultSpan = document.querySelector("#result");
     resultSpan.innerText = `Final Score: ${finalScore}`;
     nextButton.style.display = "none";
     questionContainer.style.display = "none";
     counterQuestion.style.display = "none";
+    timerContainer.style.display = "none";
     console.log("Final Score:", finalScore);
   }
 };
+const handleTimeout = function () {
+  nextQuestion();
+};
+
 
 const randomPicker = function () {
   let unusedQuestions = [];
@@ -164,7 +170,8 @@ const randomPicker = function () {
       console.log(unusedQuestions);
     }
   }
-
+console.log(unusedQuestions.length)
+  if(unusedQuestions.length > 0){
   const randomIndex = Math.floor(Math.random() * unusedQuestions.length);
   const selectedQuestion = unusedQuestions[randomIndex];
   selectedQuestion.used = true;
@@ -172,6 +179,9 @@ const randomPicker = function () {
     questions.length - (unusedQuestions.length - 1)
   } <span> / ${questions.length} </span>`;
   return selectedQuestion;
+}else {
+  return undefined;
+}
 };
 
 const displayAnswers = function (question) {
@@ -207,7 +217,8 @@ nextButton.addEventListener("click", function () {
       finalScore++;
     }
 
-    questionNumber++;
+    
+    clearInterval(timer);
     nextQuestion();
   } else {
     alert("Select an answer to proceed with the next question.");
