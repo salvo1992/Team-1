@@ -130,22 +130,21 @@ const nextQuestion = function () {
     questionText.innerText = `${currentQuestion.question}`;
     displayAnswers(currentQuestion);
 
-    
-    sec = Math.floor(timerDuration/1000);
+    sec = Math.floor(timerDuration / 1000);
     timerContainer.innerHTML = `Time Left: ${sec} seconds`;
 
-    timer = setInterval(function(){
-      if (sec <= 0){
-        clearInterval(timer)
+    timer = setInterval(function () {
+      if (sec <= 0) {
+        clearInterval(timer);
         handleTimeout();
-      }else {
+      } else {
         sec--;
         timerContainer.innerHTML = `Time Left: ${sec} seconds`;
       }
-    }, 1000)
-    
-  //console.log(timer)
-  }else {
+    }, 1000);
+
+    //console.log(timer)
+  } else {
     // Mostra il punteggio finale quando tutte le domande sono state fatte
     const resultSpan = document.querySelector("#result");
     resultSpan.innerText = `Final Score: ${finalScore}`;
@@ -160,7 +159,6 @@ const handleTimeout = function () {
   nextQuestion();
 };
 
-
 const randomPicker = function () {
   let unusedQuestions = [];
 
@@ -170,18 +168,18 @@ const randomPicker = function () {
       console.log(unusedQuestions);
     }
   }
-console.log(unusedQuestions.length)
-  if(unusedQuestions.length > 0){
-  const randomIndex = Math.floor(Math.random() * unusedQuestions.length);
-  const selectedQuestion = unusedQuestions[randomIndex];
-  selectedQuestion.used = true;
-  counterQuestion.innerHTML = `QUESTION ${
-    questions.length - (unusedQuestions.length - 1)
-  } <span> / ${questions.length} </span>`;
-  return selectedQuestion;
-}else {
-  return undefined;
-}
+  console.log(unusedQuestions.length);
+  if (unusedQuestions.length > 0) {
+    const randomIndex = Math.floor(Math.random() * unusedQuestions.length);
+    const selectedQuestion = unusedQuestions[randomIndex];
+    selectedQuestion.used = true;
+    counterQuestion.innerHTML = `QUESTION ${
+      questions.length - (unusedQuestions.length - 1)
+    } <span> / ${questions.length} </span>`;
+    return selectedQuestion;
+  } else {
+    return undefined;
+  }
 };
 
 const displayAnswers = function (question) {
@@ -217,7 +215,6 @@ nextButton.addEventListener("click", function () {
       finalScore++;
     }
 
-    
     clearInterval(timer);
     nextQuestion();
   } else {
