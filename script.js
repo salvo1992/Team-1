@@ -93,66 +93,124 @@ const questions = [
     incorrect_answers: ["Python", "C", "Jakarta"],
   },
 ];
-
-// Creare una varibile che contenga il punteggio finale del test.
+console.log(questions);
 let finalScore = 0;
-
-// Creare variabile per tenere traccia del numero (o posizione) della domanda presentata all'utente.
 let questionNumber = 0;
+let currentQuestion = null;
 
 const questionContainer = document.querySelector("#question-container");
 const questionText = document.querySelector("#question-text");
 const answerBox = document.querySelector("#answer-box");
-const displayCounter = document.querySelector("#counter");
+const nextButton = document.querySelector("#next-button");
+const counterQuestion = document.querySelector("#counter");
+let timerContainer = document.querySelector("#timer")
 
-// Quando questionNumber è maggiore delle domande disponibili, a quel punto l'applicazione dovrà mostrare il punteggio.
-//if (questionNumber.length > questions) {
-// mostra finalScore
-//}
+const initializeQuiz = function () {
+  questionNumber = 0;
+  finalScore = 0;
+  currentQuestion = null;
+
+  // Resetta lo stato "used" di tutte le domande
+  for (let i = 0; i < questions.length; i++) {
+    questions[i].used = false;
+  }
+
+  nextQuestion();
+};
+
+//let counter = 0;
+//let timeout;
+//const timer = function()
+    //{
+      //timerContainer = counter
+      //timeout = setTimeout(timer, 1000);
+      //counter ++
+      //if (counter === 10) {
+        //counter = 0;
+        //nextQuestion();
+      //} else if (unusedQuestions.length === 0) {
+        //return;
+      //}
+      //console.log(counter);
+    //}
+
+    //timerContainer.innerHTML = `<progress id="file" value="60" max="100"> </progress>`
+
+
+const nextQuestion = function () {
+  if (questionNumber < questions.length) {
+    currentQuestion = randomPicker();
+
+    questionText.innerText = `${currentQuestion.question}`;
+    displayAnswers(currentQuestion);
+    //timer()
+  } else {
+    // Mostra il punteggio finale quando tutte le domande sono state fatte
+    const resultSpan = document.querySelector("#result");
+    resultSpan.innerText = `Final Score: ${finalScore}`;
+    nextButton.style.display = "none";
+    questionContainer.style.display = "none";
+    counterQuestion.style.display = "none";
+    console.log("Final Score:", finalScore);
+  }
+};
 
 const randomPicker = function () {
-  const randomQuestion = Math.floor(Math.random() * questions.length);
-  const found = questions[randomQuestion]
-  questions.splice(randomQuestion, 1);
-  console.log(questions);
-  return found;
-};
+  let unusedQuestions = [];
 
-randomPicker();
-
-const currentQuestion = randomPicker(questions);
-console.log(currentQuestion);
-
-questionText.innerText = `${currentQuestion.question}`;
-//answerBox.innerHTML = `${currentQuestion.correct_answer} ${currentQuestion.incorrect_answers}`
-let answersArr = [currentQuestion.correct_answer];
-for (let i = 0; i < currentQuestion.incorrect_answers.length; i++) {
-  //let incorrectAnswer = currentQuestion.incorrect_answers[i];
-  answersArr.push(currentQuestion.incorrect_answers[i]);
-}
-console.log(answersArr);
-
-const shuffle = function () {
-  const randomizedAnswer = [];
-  const randomNumbers = [];
-  while (randomizedAnswer.length < answersArr.length) {
-    const j = Math.floor(Math.random() * answersArr.length);
-    console.log(j);
-    if (!randomNumbers.includes(j)) {
-      randomNumbers.push(j);
-      randomizedAnswer.push(answersArr[j]);
+  for (let i = 0; i < questions.length; i++) {
+    if (!questions[i].used) {
+      unusedQuestions.push(questions[i]);
+      console.log(unusedQuestions);
     }
   }
-  answersArr = randomizedAnswer;
+
+  const randomIndex = Math.floor(Math.random() * unusedQuestions.length);
+  const selectedQuestion = unusedQuestions[randomIndex];
+  selectedQuestion.used = true;
+  counterQuestion.innerHTML = `${
+    questions.length - (unusedQuestions.length - 1)
+  } / ${questions.length}`;
+  return selectedQuestion;
 };
 
-shuffle();
-console.log(answersArr);
+const displayAnswers = function (question) {
+  answerBox.innerHTML = "";
+  //uso spread e non concat() per comodita' di scrittura
+  const answersArr = [question.correct_answer, ...question.incorrect_answers];
+  shuffle(answersArr);
 
-for (let i = 0; i < answersArr.length; i++) {
-  answerBox.innerHTML += `<input type="radio" name="contactChoice" value="${answersArr[i]}" />
-  <label for="contactChoice1">${answersArr[i]}</label>`;
-  console.log(answersArr[i]);
-}
+  for (let i = 0; i < answersArr.length; i++) {
+    answerBox.innerHTML += `
+      <input type="radio" name="contactChoice" value="${answersArr[i]}" />
+      <label for="contactChoice1">${answersArr[i]}</label>
+    `;
+  }
+};
 
+const shuffle = function (array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+};
 
+nextButton.addEventListener("click", function () {
+  const selectedAnswer = document.querySelector(
+    'input[name="contactChoice"]:checked'
+  );
+
+  if (selectedAnswer) {
+    if (selectedAnswer.value === currentQuestion.correct_answer) {
+      finalScore++;
+    }
+
+    questionNumber++;
+    nextQuestion();
+  } else {
+    alert("Select an answer to proceed with the next question.");
+  }
+});
+
+// Inizializza
+initializeQuiz();
