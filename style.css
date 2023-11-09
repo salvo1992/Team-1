@@ -30,6 +30,8 @@ section {
   font-weight: 400;
   width: 100%;
   gap: 25px;
+  flex-wrap: wrap;
+  grid-template-columns: repeat(auto-fit, minimax(200px, 1fr));
   -webkit-box-shadow: 0px 8px 9px 3px rgba(0, 0, 0, 0.36);
   box-shadow: 0px 8px 9px 3px rgba(0, 0, 0, 0.36);
 }

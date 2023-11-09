@@ -182,8 +182,10 @@ const displayAnswers = function (question) {
 
   for (let i = 0; i < answersArr.length; i++) {
     answerBox.innerHTML += `
-      <input type="radio" name="contactChoice" value="${answersArr[i]}" />
-      <label for="contactChoice1">${answersArr[i]}</label>
+    <div class="answer-btn">
+    <input type="radio" name="contactChoice" value="${answersArr[i]}" />
+    <label for="contactChoice1">${answersArr[i]}</label>
+  </div>
     `;
   }
 };
@@ -212,8 +214,5 @@ nextButton.addEventListener("click", function () {
   }
 });
 
-
-
 // Inizializza
 initializeQuiz();
-
