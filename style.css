@@ -125,6 +125,7 @@ ul li {
 
 #security-check {
   outline: 1px white solid;
+  text-decoration: none;
   width: 20px;
   height: 20px;
 }

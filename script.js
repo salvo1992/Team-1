@@ -93,6 +93,7 @@ const questions = [
     incorrect_answers: ["Python", "C", "Jakarta"],
   },
 ];
+
 console.log(questions);
 let finalScore = 0;
 let questionNumber = 0;
@@ -103,7 +104,7 @@ const questionText = document.querySelector("#question-text");
 const answerBox = document.querySelector("#answer-box");
 const nextButton = document.querySelector("#next-button");
 const counterQuestion = document.querySelector("#counter");
-let timerContainer = document.querySelector("#timer")
+let timerContainer = document.querySelector("#timer");
 
 const initializeQuiz = function () {
   questionNumber = 0;
@@ -121,21 +122,20 @@ const initializeQuiz = function () {
 //let counter = 0;
 //let timeout;
 //const timer = function()
-    //{
-      //timerContainer = counter
-      //timeout = setTimeout(timer, 1000);
-      //counter ++
-      //if (counter === 10) {
-        //counter = 0;
-        //nextQuestion();
-      //} else if (unusedQuestions.length === 0) {
-        //return;
-      //}
-      //console.log(counter);
-    //}
+//{
+//timerContainer = counter
+//timeout = setTimeout(timer, 1000);
+//counter ++
+//if (counter === 10) {
+//counter = 0;
+//nextQuestion();
+//} else if (unusedQuestions.length === 0) {
+//return;
+//}
+//console.log(counter);
+//}
 
-    //timerContainer.innerHTML = `<progress id="file" value="60" max="100"> </progress>`
-
+//timerContainer.innerHTML = `<progress id="file" value="60" max="100"> </progress>`
 
 const nextQuestion = function () {
   if (questionNumber < questions.length) {
@@ -212,5 +212,8 @@ nextButton.addEventListener("click", function () {
   }
 });
 
+
+
 // Inizializza
 initializeQuiz();
+
