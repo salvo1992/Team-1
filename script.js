@@ -118,21 +118,26 @@ const initializeQuiz = function () {
   nextQuestion();
 };
 
-//let counter = 0;
-//let timeout;
-//const timer = function()
-    //{
-      //timerContainer = counter
-      //timeout = setTimeout(timer, 1000);
-      //counter ++
-      //if (counter === 10) {
-        //counter = 0;
-        //nextQuestion();
-      //} else if (unusedQuestions.length === 0) {
-        //return;
-      //}
-      //console.log(counter);
-    //}
+/*let counter = 3;
+let timeout;
+let iteration = 0
+const maxIterations = 10
+const timer = function(){
+  while(iteration < maxIterations){
+    counter--;
+    timeout = setTimeout(timer, 1000);
+    console.log(counter)
+     if (counter === 0){
+      counter = 3;
+      iteration++
+      nextQuestion();
+      clearTimeout(timeout);
+    }
+  }
+}*/
+
+    
+      
 
     //timerContainer.innerHTML = `<progress id="file" value="60" max="100"> </progress>`
 
@@ -168,10 +173,11 @@ const randomPicker = function () {
   const randomIndex = Math.floor(Math.random() * unusedQuestions.length);
   const selectedQuestion = unusedQuestions[randomIndex];
   selectedQuestion.used = true;
+  
   counterQuestion.innerHTML = `${
     questions.length - (unusedQuestions.length - 1)
   } / ${questions.length}`;
-  return selectedQuestion;
+  return selectedQuestion
 };
 
 const displayAnswers = function (question) {
