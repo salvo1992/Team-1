@@ -16,7 +16,7 @@ const questions = [
     type: "multiple",
     difficulty: "easy",
     question:
-      "In the programming language Java, which of these keywords would you put on a variable to make sure it doesn&#039;t get modified?",
+      "In the programming language Java, which of these keywords would you put on a variable to make sure it doesn't get modified?",
     correct_answer: "Final",
     incorrect_answers: ["Static", "Private", "Public"],
   },
@@ -105,7 +105,7 @@ const questionText = document.querySelector("#question-text");
 const answerBox = document.querySelector("#answer-box");
 const nextButton = document.querySelector("#next-button");
 const counterQuestion = document.querySelector("#counter");
-let timerContainer = document.querySelector("#timer");
+let timerContainer = document.querySelector("#timer-circle");
 
 const initializeQuiz = function () {
   questionNumber = 0;
@@ -120,7 +120,7 @@ const initializeQuiz = function () {
   nextQuestion();
 };
 
-const timerDuration = 10000;
+const timerDuration = 9000;
 
 const nextQuestion = function () {
   clearInterval(timer); //Resetta Timer
@@ -131,7 +131,7 @@ const nextQuestion = function () {
     displayAnswers(currentQuestion);
 
     sec = Math.floor(timerDuration / 1000);
-    timerContainer.innerHTML = `Time Left: ${sec} seconds`;
+    timerContainer.innerHTML = `${sec}`;
 
     timer = setInterval(function () {
       if (sec <= 0) {
@@ -139,7 +139,7 @@ const nextQuestion = function () {
         handleTimeout();
       } else {
         sec--;
-        timerContainer.innerHTML = `Time Left: ${sec} seconds`;
+        timerContainer.innerHTML = `${sec}`;
       }
     }, 1000);
 
@@ -152,6 +152,7 @@ const nextQuestion = function () {
     questionContainer.style.display = "none";
     counterQuestion.style.display = "none";
     timerContainer.style.display = "none";
+    remove.innerHTML = "";
     console.log("Final Score:", finalScore);
   }
 };
@@ -216,11 +217,17 @@ nextButton.addEventListener("click", function () {
     }
 
     clearInterval(timer);
+    resetSvg();
     nextQuestion();
   } else {
     alert("Select an answer to proceed with the next question.");
   }
 });
 
+let remove = document.querySelector("svg");
+const resetSvg = function() {
+  remove.innerHTML = ""
+  remove.innerHTML = `<circle r="18" cx="20" cy="20"></circle>`
+} 
 // Inizializza
 initializeQuiz();
